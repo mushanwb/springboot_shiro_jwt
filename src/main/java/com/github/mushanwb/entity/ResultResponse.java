@@ -1,8 +1,6 @@
 package com.github.mushanwb.entity;
 
 
-import java.util.List;
-
 public class ResultResponse<T> {
     // http 状态码
     private int code;
@@ -11,9 +9,9 @@ public class ResultResponse<T> {
     private String msg;
 
     // 返回的数据
-    private List<T> data;
+    private T data;
 
-    public static <T> ResultResponse<T> result(int code, String msg, List<T> data) {
+    public static <T> ResultResponse<T> result(int code, String msg, T data) {
         ResultResponse<T> result = new ResultResponse<>();
         result.setCode(code);
         result.setMsg(msg);
@@ -41,11 +39,11 @@ public class ResultResponse<T> {
         this.msg = msg;
     }
 
-    public List<T> getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(List<T> data) {
+    public void setData(T data) {
         this.data = data;
     }
 }
