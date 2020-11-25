@@ -4,6 +4,9 @@ import com.github.mushanwb.entity.ResultResponse;
 import com.github.mushanwb.entity.User;
 import com.github.mushanwb.jwt.JWTUtil;
 import com.github.mushanwb.service.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +47,28 @@ public class WebController {
         } else {
             return ResultResponse.result(401, "账号或密码错误", null);
         }
+    }
+
+    /**
+     * 这个接口不用登录就可以访问
+     * 但是登录的用户 和 没登录的用户 返回的结果不一样
+     * @return 返回不同的数据
+     */
+    @GetMapping("/article")
+    @ResponseBody
+    public ResultResponse<String> article() {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            return ResultResponse.result(200, "你已登录，是用户", null);
+        } else {
+            return ResultResponse.result(200, "你没登录，是游客", null);
+        }
+    }
+
+    @GetMapping("/require_auth")
+    @ResponseBody
+    public ResultResponse<String> requireAuth() {
+        return ResultResponse.result(200, "你正在登录状态", null);
     }
 
 
