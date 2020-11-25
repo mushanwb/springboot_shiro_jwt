@@ -1,6 +1,7 @@
 package com.github.mushanwb.shiro;
 
 import com.github.mushanwb.entity.User;
+import com.github.mushanwb.jwt.JWTToken;
 import com.github.mushanwb.jwt.JWTUtil;
 import com.github.mushanwb.service.UserService;
 import org.apache.shiro.authc.AuthenticationException;
@@ -21,6 +22,14 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     public ShiroRealm(UserService userService) {
         this.userService = userService;
+    }
+
+    /**
+     * 必须重写此方法，不然Shiro会报错
+     */
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return token instanceof JWTToken;
     }
 
     /**
