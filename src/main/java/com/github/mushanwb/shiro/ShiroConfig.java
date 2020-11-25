@@ -9,6 +9,7 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,7 +20,6 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
-
 
     @Bean
     public SecurityManager securityManager(ShiroRealm shiroRealm) {
@@ -36,6 +36,7 @@ public class ShiroConfig {
         DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
         defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
         subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
+
         securityManager.setSubjectDAO(subjectDAO);
 
         SecurityUtils.setSecurityManager(securityManager);
